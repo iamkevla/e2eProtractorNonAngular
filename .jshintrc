@@ -22,5 +22,10 @@
   "maxcomplexity": 18,
   "maxparams": 12,
   "globals": {
+		"describe": true,
+		"beforeEach": true,
+		"browser": true,
+		"it": true,
+		"expect": true
   }
 }

@@ -3,54 +3,58 @@
 
 
 // spec.js
-describe('tc3 e2e testing', function() {
+describe('ninja e2e testing', function() {
 
 	var BASEAPIURL = 'http://pmrscr6dev.m2group.com.au/cerdev2';
 
-
 	beforeEach(function() {
-		browser.get(BASEAPIURL + '/login.aspx');
+		browser.ignoreSynchronization = true;
+	});
+	
+	
+	beforeEach(function() {
+		browser.get(BASEAPIURL + '/');
 	});
 
 
 	it('should have a title', function() {
-		expect(browser.getTitle()).toEqual('Take Command - Commander');
+		expect(browser.getTitle()).toEqual('CRM Plus');
 	});
 
+	
+	
 	it(' should automatically redirect to /#/ when location hash/fragment is empty', function() {
-		expect(browser.getLocationAbsUrl()).toBe('/login/');
+		expect(browser.getCurrentUrl()).toBe('http://pmrscr6dev.m2group.com.au/cerdev2/Login.aspx?ReturnUrl=%2fcerdev2%2fframework.aspx');
 	});
 
+	
 	describe('login > ', function() {
 
-		beforeEach(function() {
-			browser.get(BASEAPIURL + '/#/login/');
-		});
-
-
 		it(' should be able to be at login', function() {
-			var button = element(by.css('.btn-info'));
-			expect(button.getText()).toEqual('Sign in');
-			expect(button.getCssValue('display')).toEqual('inline-block');
+			element(by.id('loginInput')).then(function(elem) {
+				console.log(elem);
+				expect(elem.getText()).toEqual('Sign in');
+			});
 		});
 
-
+	/*
 		it(' should reject invalid username and password', function() {
-			element(by.model('username')).sendKeys('20011176');
-			element(by.model('password')).sendKeys('invalid');
-			element(by.css('button[type="submit"]')).click();
-			expect(element(by.binding('error()')).getText()).toContain('Incorrect password');
+			element(By.id('txtUserName')).sendKeys('deve2');
+			element(By.id('txtPasswordlabel')).sendKeys('invalid');
+			element(By.id('loginInput')).click();
+			expect(element(By.id('messages')).getText()).toContain('Invalid');
 		});
 
+			
 		it(' should accept valid username and password', function() {
 			element(by.model('username')).sendKeys('deve2');
 			element(by.model('password')).sendKeys('oracle');
 			element(by.css('button[type="submit"]')).click();
 			expect(browser.getLocationAbsUrl()).toBe('/accounts/20011176');
 		});
-
+		*/
 	});
-
+	
 
 
 });

@@ -24,7 +24,8 @@ gulp.task('protractor', ['webdriver_update'], function() {
 	gulp.src(['test/protractor/*Spec.js'])
 		.pipe(protractor({
 			configFile: 'protractor.conf.js',
-			keepAlive: true
+			keepAlive: true,
+			dubug: true
 		}))
 		.on('error', plug.util.log);
 });
