@@ -30,11 +30,4 @@ gulp.task('protractor', ['webdriver_update'], function() {
 		.on('error', plug.util.log);
 });
 
-
-
-
-
-
-
-
 gulp.task('default', ['protractor']);

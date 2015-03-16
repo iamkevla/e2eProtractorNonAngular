@@ -32,7 +32,6 @@ describe('ninja e2e testing', function() {
 
 		it(' should be able to be at login', function() {
 			element(by.id('loginInput')).then(function(elem) {
-				console.log(elem);
 				expect(elem.getText()).toEqual('Sign in');
 			});
 		});
