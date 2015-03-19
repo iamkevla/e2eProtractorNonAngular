@@ -31,27 +31,66 @@ describe('ninja e2e testing', function() {
 	describe('login > ', function() {
 
 		it(' should be able to be at login', function() {
-			element(by.id('loginInput')).then(function(elem) {
-				expect(elem.getText()).toEqual('Sign in');
+			expect(element(by.id('loginInput')).getAttribute('value')).toEqual('Log in');
+		});
+
+	
+		it(' should reject invalid username and password', function() {
+			element(by.id('txtUserName')).sendKeys('deve2');
+			element(by.id('txtPassword')).sendKeys('invalid');
+			element(by.id('loginInput')).click();
+			expect(element(by.id('messages')).getText()).toContain('Invalid');
+		});
+
+		
+		it(' should accept valid username and password', function() {
+			element(by.id('txtUserName')).sendKeys('deve2');
+			element(by.id('txtPassword')).sendKeys('oracle');
+			element(by.id('loginInput')).click();
+			expect(browser.getCurrentUrl())
+				.toBe('http://pmrscr6dev.m2group.com.au/cerdev2/framework.aspx');
+		});
+		
+	});
+	
+	describe('Search > ', function() {
+	
+		/*beforeEach(function() {
+			try {
+				element(by.id('h1Logout')).click();
+			} catch (err) {
+				console.log('no logout');
+			}
+			element(by.id('txtUserName')).sendKeys('deve2');
+			element(by.id('txtPassword')).sendKeys('oracle');
+			element(by.id('loginInput')).click();
+		});*/
+		
+		it(' should be able to search for an account', function() {
+			element(by.css('div.bannerMenuWrap[title="Search"]')).click();
+			element(by.css('div.menuWrap[title="Search for Account"]')).click();
+			browser.switchTo().frame(0).then(function(){
+				//browser.sleep(1000);
+				element(by.css('input[cleanId="renderertxtAccountNo"]'))
+					.sendKeys('20000001\n')
+					.then(function() {
+						browser.switchTo().defaultContent();
+						browser
+							.sleep(20000)
+							.then(function(){
+							expect(element(by.id('qspAccountName')).getText()).toContain('BSS Team');
+						});
+//						browser
+//							.wait(function() {
+//								return protractor.until.elementIsVisible(element(by.id('qspAccountName')));
+//							})
+//							.then(function() {			
+//								expect(element(by.id('qspAccountName')).getText()).toContain('BSS Team');
+//							});
+					});
 			});
 		});
 
-	/*
-		it(' should reject invalid username and password', function() {
-			element(By.id('txtUserName')).sendKeys('deve2');
-			element(By.id('txtPasswordlabel')).sendKeys('invalid');
-			element(By.id('loginInput')).click();
-			expect(element(By.id('messages')).getText()).toContain('Invalid');
-		});
-
-			
-		it(' should accept valid username and password', function() {
-			element(by.model('username')).sendKeys('deve2');
-			element(by.model('password')).sendKeys('oracle');
-			element(by.css('button[type="submit"]')).click();
-			expect(browser.getLocationAbsUrl()).toBe('/accounts/20011176');
-		});
-		*/
 	});
 	
 
